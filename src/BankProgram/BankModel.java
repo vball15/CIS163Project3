@@ -8,28 +8,28 @@ import java.util.ArrayList;
  */
 public class BankModel extends AbstractListModel {
 
-    private ArrayList<Account> accts;
+    private ArrayList<Account> accounts;
 
     public BankModel(ArrayList<Account> accts) {
-        this.accts = accts;
+        this.accounts = accts;
     }
 
-    public Object getElementAt(int arg0) {
+    public Object getElementAt(int row) {
 
-        return arg0;
+        return row;
     }
 
     public int getSize() {
-        int size = 0;
+        int size = 0
 
         return size;
     }
 
     public ArrayList<Account> getAccts() {
-        return accts;
+        return accounts;
     }
 
     public void setAccts(ArrayList<Account> accts) {
-        this.accts = accts;
+        this.accounts = accts;
     }
 }
