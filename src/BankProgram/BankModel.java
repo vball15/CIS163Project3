@@ -1,28 +1,52 @@
 package BankProgram;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 /**
  * Created by flackeri on 10/23/15.
  */
-public class BankModel extends AbstractListModel {
+public class BankModel extends AbstractTableModel {
 
+    /** array list to hold account objects */
     private ArrayList<Account> accounts;
 
-    public BankModel(ArrayList<Account> accts) {
-        this.accounts = accts;
+    /** array of strings for table column names */
+    private String[] colNames;
+
+    public BankModel() {
+        accounts = new ArrayList<Account>();
+        colNames = new String[] {"Number", "Date Opened", "Account Owner", "Current Balance"};
     }
 
-    public Object getElementAt(int row) {
+    public Object getValueAt(int rowNum, int colNum) {
+        Account a = accounts.get(rowNum);
 
-        return row;
+        switch (colNum) {
+            case 0:
+                return a.getNumber();
+            case 1:
+                return a.getDateOpened();
+            case 2:
+                return a.getOwner();
+            case 3:
+                return a.getBalance();
+            default:
+                return null;
+        }
     }
 
-    public int getSize() {
-        int size = 0
+    public int getRowCount() {
+        return accounts.size();
+    }
 
-        return size;
+    public int getColumnCount() {
+        return 4;
+    }
+
+    public String getColumnName(int num) {
+        return colNames[num];
     }
 
     public ArrayList<Account> getAccts() {
