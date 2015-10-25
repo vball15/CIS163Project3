@@ -3,6 +3,7 @@ package BankProgram;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.lang.Comparable;
 
 /**
  * Created by flackeri on 10/23/15.
@@ -55,5 +56,56 @@ public class BankModel extends AbstractTableModel {
 
     public void setAccts(ArrayList<Account> accts) {
         this.accounts = accts;
+    }
+
+    public Account findAccount(int acctNumber){
+        sortAccountNumber(accounts);
+        int i = search(accounts, 0, accounts.size() - 1, acctNumber);
+        if(i != -1)
+            return accounts.get(i);
+        else
+            return accounts.get(0); //
+    }
+
+    private <T extends Comparable<T>> int search(ArrayList<Account> data, int min, int max, int number){
+        int location = -1;
+        int mid = (min + max) / 2;
+
+        if(compareTo(data.getValueAt(mid, 0), number) == 0)
+            location = mid;
+        else if(compareTo(data.getValueAt(mid, 0), number) > 0){
+            if(min <= mid - 1)
+                location = search(data, min, mid - 1, number);
+        }
+        else if(mid + 1 <= max)
+            location = search(data, mid + 1, max, number);
+
+        return location;
+    }
+
+    private int compareTo(int comparison, int other){
+        if(comparison > other)
+            return 1;
+        else if(comparison == other)
+            return 0;
+        else
+            return -1;
+    }
+
+    public void sortAccountNumber(ArrayList<Account> data){
+        int position, scan;
+
+        for(position = data.size() - 1; position >= 0; position++){
+            for(scan = 0; scan <= position - 1; scan++){
+                if(compareTo(data.getValueAt(scan, 0), data.getValueAt(scan + 1, 0)) > 0)
+                    swap(data, scan, scan + 1);
+            }
+        }
+    }
+
+    private void swap(ArrayList<Account> data, int swap1, int swap2){
+        Account temp = data.get(swap1);
+        data.set(swap1, data.get(swap2));
+        data.set(swap2, temp);
     }
 }
