@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.lang.Comparable;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
