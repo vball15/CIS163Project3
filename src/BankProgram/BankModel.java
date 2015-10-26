@@ -60,6 +60,10 @@ public class BankModel extends AbstractTableModel {
         this.accounts = accts;
     }
 
+    public void add(Account account){
+        this.accounts.add(account);
+
+    }
     public Account findAccount(int acctNumber){
         sortAccountNumber(accounts);
         int i = search(accounts, 0, accounts.size() - 1, acctNumber);
@@ -159,5 +163,39 @@ public class BankModel extends AbstractTableModel {
         catch(FileNotFoundException error) {
             System.out.println("File not found ");
         }
+    }
+    
+     public void saveBinary(File fileName) {
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            Account[] accounts1 = accounts.toArray(new Account[accounts.size()]);
+
+            out.writeObject(accounts1);
+            out.close();
+            fileOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadBinary(File fileName) throws IOException{
+
+        FileInputStream fileIn = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+
+        try {
+            Account [] accounts1  = (Account []) in.readObject();
+
+            accounts.clear();
+            accounts.addAll(Arrays.asList(accounts1));
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
+        in.close();
     }
 }
